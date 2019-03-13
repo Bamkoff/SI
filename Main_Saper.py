@@ -16,7 +16,7 @@ FPS = 30 # frames per second setting
 fpsClock = pygame.time.Clock()
 
 WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 640
+WINDOW_HEIGHT = 700
 
 
 # set up the window
@@ -38,15 +38,15 @@ all_sprites_list.add(saper)
 #hans = Hans(300,400, WINDOW_WIDTH, WINDOW_HEIGHT)
 #all_sprites_list.add(hans)
 
-Bombs_A = [Bomb_A(0,200), Bomb_A(900,100)]
+Bombs_A = [Bomb_A(0, 200, 300), Bomb_A(900, 100, 400)]
 for Bomb_A in Bombs_A:
     all_sprites_list.add(Bomb_A)
 
-Bombs_B = [Bomb_B(200,300),Bomb_B(500,400), Bomb_B(700,0)]
+Bombs_B = [Bomb_B(200, 300, 400), Bomb_B(500, 400, 1300), Bomb_B(700, 0, 1200)]
 for Bomb_B in Bombs_B:
     all_sprites_list.add(Bomb_B)
 
-Bombs_C = [Bomb_C(0,500),Bomb_C(300,400), Bomb_C(600,0), Bomb_C(800,150)]
+Bombs_C = [Bomb_C(0, 500, 1200), Bomb_C(300, 400, 900), Bomb_C(600, 0, 500), Bomb_C(800, 150, 900)]
 for Bomb_C in Bombs_C:
     all_sprites_list.add(Bomb_C)
 
@@ -88,22 +88,25 @@ while True: # the main game loop
     #    elsa.reset()
 
     for Bomb_A in Bombs_A:
-        if pygame.sprite.collide_rect(saper, Bomb_A):
+        if pygame.sprite.collide_rect(saper, Bomb_A) or Bomb_A.time == 0:
             all_sprites_list.remove(Bomb_A)
-            Bomb_A.rect.x=-1000
-            Bomb_A.rect.y=-1000
+            Bomb_A.rect.x = -1000
+            Bomb_A.rect.y = -1000
+        Bomb_A.tick()
 
     for Bomb_B in Bombs_B:
-        if pygame.sprite.collide_rect(saper, Bomb_B):
+        if pygame.sprite.collide_rect(saper, Bomb_B) or Bomb_B.time == 0:
             all_sprites_list.remove(Bomb_B)
-            Bomb_B.rect.x=-1000
-            Bomb_B.rect.y=-1000
+            Bomb_B.rect.x = -1000
+            Bomb_B.rect.y = -1000
+        Bomb_B.tick()
 
     for Bomb_C in Bombs_C:
-        if pygame.sprite.collide_rect(saper, Bomb_C):
+        if pygame.sprite.collide_rect(saper, Bomb_C) or Bomb_C.time == 0:
             all_sprites_list.remove(Bomb_C)
-            Bomb_C.rect.x=-1000
-            Bomb_C.rect.y=-1000
+            Bomb_C.rect.x = -1000
+            Bomb_C.rect.y = -1000
+        Bomb_C.tick()
 
     if gamestate == 0:
         DISPLAYSURF.blit(background_image, (0,0))

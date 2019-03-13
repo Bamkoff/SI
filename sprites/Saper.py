@@ -19,7 +19,7 @@ class Saper(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.step = 50
+        self.step = 100
 
     def move_right(self):
         if self.rect.x + self.rect.width + self.step <= self.window_width:
