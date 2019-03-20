@@ -6,7 +6,7 @@ from pygame.locals import *
 
 
 class Bomb_A(pygame.sprite.Sprite):
-    def __init__(self, x, y, time):
+    def __init__(self, time):
         pygame.sprite.Sprite.__init__(self)
 
         # Set height, width
@@ -15,9 +15,8 @@ class Bomb_A(pygame.sprite.Sprite):
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
         self.time = time
+        self.type = "A"
 
     def tick(self):
         if self.time > 0:
