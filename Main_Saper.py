@@ -19,7 +19,7 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = [[Saper(), None, None, None, None, None, None],
-       [None, None, None, None, None, None, None],
+       [None, Bomb_A(900), None, None, None, None, None],
        [None, None, None, None, None, None, None],
        [None, None, None, None, None, None, None],
        [None, None, None, None, None, None, None],
@@ -29,7 +29,12 @@ map = [[Saper(), None, None, None, None, None, None],
        [None, None, None, None, None, None, None],
        [None, None, None, None, None, None, None]]
 
+detonated = 0
+defused = 0
 Saper_image = pygame.image.load("images/saper.png")
+Bomb_A_image = pygame.image.load("images/Bomb_A.png")
+Bomb_B_image = pygame.image.load("images/Bomb_A.png")
+Bomb_C_image = pygame.image.load("images/Bomb_A.png")
 Saper_x = 0
 Saper_y = 0
 
@@ -40,11 +45,6 @@ pygame.display.set_caption('Saper')
 WHITE = (255, 255, 255)
 background_image = pygame.image.load("images/background.png")
 gamestate = 0
-
-for i in range(len(map)):
-    print("\n")
-    for j in range(len(map[i])):
-        print(map[i][j])
 
 while True: # the main game loop
     for event in pygame.event.get():
@@ -76,11 +76,34 @@ while True: # the main game loop
                     map[Saper_x][Saper_y] = None
                     Saper_y = Saper_y - 1
 
+
         DISPLAYSURF.blit(background_image, (0, 0))
         for i in range(len(map)):
             for j in range(len(map[i])):
                 if map[i][j] is not None:
-                    DISPLAYSURF.blit(Saper_image, [i*100, j*100])
+                    if map[i][j].__class__.__name__ == "Saper":
+                        DISPLAYSURF.blit(Saper_image, [i*100, j*100])
+                    elif map[i][j].__class__.__name__ == "Bomb_A":
+                        if map[i][j].time == 0:
+                            map[i][j] = None
+                            detonated += 1
+                        else:
+                            DISPLAYSURF.blit(Bomb_A_image, [i*100, j*100])
+                            map[i][j].tick()
+                    elif map[i][j].__class__.__name__ == "Bomb_B":
+                        if map[i][j].time == 0:
+                            map[i][j] = None
+                            detonated += 1
+                        else:
+                            DISPLAYSURF.blit(Bomb_B_image, [i*100, j*100])
+                            map[i][j].tick()
+                    elif map[i][j].__class__.__name__ == "Bomb_C":
+                        if map[i][j].time == 0:
+                            map[i][j] = None
+                            detonated += 1
+                        else:
+                            DISPLAYSURF.blit(Bomb_C_image, [i*100, j*100])
+                            map[i][j].tick()
 
     # Refresh Screen
     pygame.display.flip()
