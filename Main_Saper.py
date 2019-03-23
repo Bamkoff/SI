@@ -22,19 +22,20 @@ map = [[Saper(), None, None, None, None, None, None],
        [None, Bomb_A(900), None, None, None, None, None],
        [None, None, None, None, None, None, None],
        [None, None, None, None, None, None, None],
+       [None, None, None, Bomb_B(800), None, None, None],
        [None, None, None, None, None, None, None],
        [None, None, None, None, None, None, None],
-       [None, None, None, None, None, None, None],
-       [None, None, None, None, None, None, None],
-       [None, None, None, None, None, None, None],
+       [Tools(), None, None, None, None, None, None],
+       [None, None, None, None, None, Bomb_C(1000), None],
        [None, None, None, None, None, None, None]]
 
 detonated = 0
 defused = 0
 Saper_image = pygame.image.load("images/saper.png")
 Bomb_A_image = pygame.image.load("images/Bomb_A.png")
-Bomb_B_image = pygame.image.load("images/Bomb_A.png")
-Bomb_C_image = pygame.image.load("images/Bomb_A.png")
+Bomb_B_image = pygame.image.load("images/Bomb_B.png")
+Bomb_C_image = pygame.image.load("images/Bomb_C.png")
+Tool_image = pygame.image.load("images/tools.png")
 Saper_x = 0
 Saper_y = 0
 
@@ -54,28 +55,127 @@ while True: # the main game loop
         elif event.type == KEYUP:
             if event.key == K_RIGHT:
                 if Saper_x < 9:
-                    map[Saper_x + 1][Saper_y] = map[Saper_x][Saper_y]
-                    map[Saper_x][Saper_y] = None
-                    Saper_x = Saper_x + 1
+                    if map[Saper_x + 1][Saper_y] is None:
+                        map[Saper_x + 1][Saper_y] = map[Saper_x][Saper_y]
+                        map[Saper_x][Saper_y] = None
+                        Saper_x = Saper_x + 1
+
+                    elif map[Saper_x + 1][Saper_y].__class__.__name__ == "Tools":
+                        map[Saper_x][Saper_y].change_tool()
+
+                    elif map[Saper_x + 1][Saper_y].__class__.__name__ == "Bomb_A":
+                        if map[Saper_x][Saper_y].tool == 0:
+                            map[Saper_x + 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x + 1
+                            defused += 1
+
+                    elif map[Saper_x + 1][Saper_y].__class__.__name__ == "Bomb_B":
+                        if map[Saper_x][Saper_y].tool == 1:
+                            map[Saper_x + 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x + 1
+                            defused += 1
+
+                    elif map[Saper_x + 1][Saper_y].__class__.__name__ == "Bomb_C":
+                        if map[Saper_x][Saper_y].tool == 2:
+                            map[Saper_x + 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x + 1
+                            defused += 1
 
             elif event.key == K_LEFT:
                 if Saper_x > 0:
-                    map[Saper_x - 1][Saper_y] = map[Saper_x][Saper_y]
-                    map[Saper_x][Saper_y] = None
-                    Saper_x = Saper_x - 1
+                    if map[Saper_x - 1][Saper_y] is None:
+                        map[Saper_x - 1][Saper_y] = map[Saper_x][Saper_y]
+                        map[Saper_x][Saper_y] = None
+                        Saper_x = Saper_x - 1
+
+                    elif map[Saper_x - 1][Saper_y].__class__.__name__ == "Tools":
+                        map[Saper_x][Saper_y].change_tool()
+
+                    elif map[Saper_x - 1][Saper_y].__class__.__name__ == "Bomb_A":
+                        if map[Saper_x][Saper_y].tool == 0:
+                            map[Saper_x - 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x - 1
+                            defused += 1
+
+                    elif map[Saper_x - 1][Saper_y].__class__.__name__ == "Bomb_B":
+                        if map[Saper_x][Saper_y].tool == 1:
+                            map[Saper_x - 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x - 1
+                            defused += 1
+
+                    elif map[Saper_x - 1][Saper_y].__class__.__name__ == "Bomb_C":
+                        if map[Saper_x][Saper_y].tool == 2:
+                            map[Saper_x - 1][Saper_y] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_x = Saper_x - 1
+                            defused += 1
 
             elif event.key == K_DOWN:
                 if Saper_y < 6:
-                    map[Saper_x][Saper_y + 1] = map[Saper_x][Saper_y]
-                    map[Saper_x][Saper_y] = None
-                    Saper_y = Saper_y + 1
+                    if map[Saper_x][Saper_y + 1] is None:
+                        map[Saper_x][Saper_y + 1] = map[Saper_x][Saper_y]
+                        map[Saper_x][Saper_y] = None
+                        Saper_y = Saper_y + 1
+
+                    elif map[Saper_x][Saper_y + 1].__class__.__name__ == "Tools":
+                        map[Saper_x][Saper_y].change_tool()
+
+                    elif map[Saper_x][Saper_y + 1].__class__.__name__ == "Bomb_A":
+                        if map[Saper_x][Saper_y].tool == 0:
+                            map[Saper_x][Saper_y + 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y + 1
+                            defused += 1
+
+                    elif map[Saper_x][Saper_y + 1].__class__.__name__ == "Bomb_B":
+                        if map[Saper_x][Saper_y].tool == 1:
+                            map[Saper_x][Saper_y + 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y + 1
+                            defused += 1
+
+                    elif map[Saper_x][Saper_y + 1].__class__.__name__ == "Bomb_C":
+                        if map[Saper_x][Saper_y].tool == 2:
+                            map[Saper_x][Saper_y + 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y + 1
+                            defused += 1
 
             elif event.key == K_UP:
                 if Saper_y > 0:
-                    map[Saper_x][Saper_y - 1] = map[Saper_x][Saper_y]
-                    map[Saper_x][Saper_y] = None
-                    Saper_y = Saper_y - 1
+                    if map[Saper_x][Saper_y - 1] is None:
+                        map[Saper_x][Saper_y - 1] = map[Saper_x][Saper_y]
+                        map[Saper_x][Saper_y] = None
+                        Saper_y = Saper_y - 1
 
+                    elif map[Saper_x][Saper_y - 1].__class__.__name__ == "Tools":
+                        map[Saper_x][Saper_y].change_tool()
+
+                    elif map[Saper_x][Saper_y - 1].__class__.__name__ == "Bomb_A":
+                        if map[Saper_x][Saper_y].tool == 0:
+                            map[Saper_x][Saper_y - 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y - 1
+                            defused += 1
+
+                    elif map[Saper_x][Saper_y - 1].__class__.__name__ == "Bomb_B":
+                        if map[Saper_x][Saper_y].tool == 1:
+                            map[Saper_x][Saper_y - 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y - 1
+                            defused += 1
+
+                    elif map[Saper_x][Saper_y - 1].__class__.__name__ == "Bomb_C":
+                        if map[Saper_x][Saper_y].tool == 2:
+                            map[Saper_x][Saper_y - 1] = map[Saper_x][Saper_y]
+                            map[Saper_x][Saper_y] = None
+                            Saper_y = Saper_y - 1
+                            defused += 1
 
         DISPLAYSURF.blit(background_image, (0, 0))
         for i in range(len(map)):
@@ -104,6 +204,8 @@ while True: # the main game loop
                         else:
                             DISPLAYSURF.blit(Bomb_C_image, [i*100, j*100])
                             map[i][j].tick()
+                    elif map[i][j].__class__.__name__ == "Tools":
+                        DISPLAYSURF.blit(Tool_image, [i * 100, j * 100])
 
     # Refresh Screen
     pygame.display.flip()

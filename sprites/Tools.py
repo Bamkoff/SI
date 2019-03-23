@@ -9,8 +9,6 @@ class Tools(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # Set height, width
-#        self.image = pygame.image.load("images/wall.png")
+#       self.image = pygame.image.load("images/wall.png")
         self.image = pygame.image.load("images/tools.png")
 
-        # Make our top-left corner the passed-in location.
-        self.rect = self.image.get_rect()
