@@ -1,14 +1,21 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import pygame, sys
+import sys
 from pygame.locals import *
 
-class Tools(pygame.sprite.Sprite):
+
+class Tools():
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
+        self.tool = "A"
+        self.next_tool = 1
 
-        # Set height, width
-#       self.image = pygame.image.load("images/wall.png")
-        self.image = pygame.image.load("images/tools.png")
-
+    def change_tool(self):
+        if self.next_tool == 1:
+            self.tool = "B"
+        elif self.next_tool == 2:
+            self.tool = "C"
+        else:
+            self.tool = "A"
+        self.next_tool = self.next_tool + 1
+        self.next_tool = self.next_tool % 3

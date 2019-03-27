@@ -1,21 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import pygame, sys
+import sys
+from sprites.Tools import Tools
+from sprites.Bomb import Bomb
 from pygame.locals import *
 
 
-class Saper(pygame.sprite.Sprite):
+class Saper():
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
 
-        # Set height, width
-        self.image = pygame.image.load("images/saper.png")
+        self.tool = "none"
 
-        # Make our top-left corner the passed-in location.
-        self.rect = self.image.get_rect()
-        self.tool = 1
+    def change_tool(self, tool_box):
+        self.tool = tool_box.tool
+        tool_box.change_tool()
 
-    def change_tool(self):
-        self.tool = self.tool + 1
-        self.tool = self.tool % 3
+    def defuse(self, bomb):
+        if bomb.type == self.tool:
+            bomb.time = -1
+            bomb.type = "done"
+            return 1
+        else:
+            return 0
