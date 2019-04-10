@@ -9,6 +9,50 @@ from sprites.Saper import Saper
 from sprites.Wall import Wall
 from pygame.locals import *
 
+
+Solutions = []
+
+def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
+    #print("odwiedzono punktow: ",left)
+    #print("wykonane operacje:", Curr_operations)
+
+    for i in range(len(destination)):
+            if destination[i][0] == a and  destination[i][1] == b:
+                left = left + 1
+
+    if left == len(destination):
+        Solutions.append(Curr_operations)
+        return 0
+
+    if anti_loop < 40 :
+        anti_loop = anti_loop + 1
+        if Curr_operations[len(Curr_operations) - 1] != "L":
+            if Grid[a + 1][b] is None:
+                operations1 = Curr_operations[:]
+                operations1.append("R")
+
+                dfs_find(Grid, operations1, a + 1, b, destination, left, anti_loop)
+
+        if Curr_operations[len(Curr_operations) - 1] != "R":
+            if Grid[a - 1][b] is None:
+                operations2 = Curr_operations[:]
+                operations2.append("L")
+                dfs_find(Grid, operations2, a - 1, b, destination, left, anti_loop)
+
+        if Curr_operations[len(Curr_operations) - 1] != "U":
+            if Grid[a][b + 1] is None:
+                operations3 = Curr_operations[:]
+                operations3.append("D")
+                dfs_find(Grid, operations3, a, b + 1, destination, left, anti_loop)
+
+        if Curr_operations[len(Curr_operations) - 1] != "D":
+            if Grid[a][b - 1] is None:
+                operations4 = Curr_operations[:]
+                operations4.append("U")
+                dfs_find(Grid, operations4, a, b - 1, destination, left, anti_loop)
+
+
+
 pygame.init()
 
 FPS = 30 # frames per second setting
@@ -18,36 +62,46 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Tools(), Wall(), None  , Bomb(980, "A"), Wall(), None  , Wall(), Bomb(1260, "B"), None  , None  , None  , None  , Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), Wall(), None  , Wall(), Wall(), Wall(), Wall(), Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), None  , None  , None  , None  , Wall(), None  , None  , None  , Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), Wall(), Wall(), Wall(), None  , Wall(), None  , None  , None, Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), Bomb(570, "C"), None  , None  , None  , None  , None  , Wall(), None  , Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None  , Wall(), None  , Wall(), None  , Wall()],
-       [Wall(), None  , None  , None  , None  , None  , None  , Wall(), None  , Wall(), None  , Wall(), None  , Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None  , Wall(), None  , Wall(), None  , None  , None  , Wall()],
-       [Wall(), None  , None  , None, None  , None  , None  , Wall(), None  , Wall(), None  , Wall(), Wall(), Wall()],
-       [Wall(), None  , Wall(), Wall(), Wall(), None  , None  , None  , Saper(), Wall(), None  , Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), Bomb(1060, "A"), Wall(), None  , Wall(), None  , Wall(), Wall(), None  , Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), None  , Wall(), Wall(), Wall(), None  , None  , None, None  , Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), None  , Wall(), Bomb(1130, "C"), Wall(), None  , Wall(), Wall(), None  , Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), None  , None  , None  , Wall(), None  , Wall(), None  , None  , Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), Wall(), Wall(), Wall(), Wall(), None  , Wall(), None  , Wall(), Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), Bomb(1060, "A"), None  , None  , None  , None  , Wall(), None  , None, Wall()],
-       [Wall(), None  , Wall(), None  , Wall(), Wall(), Wall(), Wall(), Wall(), None  , Wall(), Wall(), None  , Wall()],
-       [Wall(), Bomb(1000, "A"), Wall(), None  , None  , None  , None  , None  , None  , None  , Wall(), Bomb(1100, "B"), None, Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Saper(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(),Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), None, None, None, None, None, None, Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Bomb(980, "A"), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+	   [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
 
 x = 0
 y = 0
 x_r = 0
 y_r = 0
 
+print(Solutions)
+
 for i in range(len(map)):
     for j in range(len(map[i])):
         if map[i][j].__class__.__name__ == "Saper":
             x = i
             y = j
+
+dfs_find(map, ["N"], x, y, [[17,2],[17,11]], 0, 0)
+min_sol = 0
+for i in range(len(Solutions)):
+    if len(Solutions[i]) > len(Solutions[min_sol]):
+        min_sol = i
+
+print(min_sol)
 
 detonated = 0
 defused = 0
@@ -64,43 +118,43 @@ Hole_image = pygame.image.load("images/Hole.png")
 Tool_image = pygame.image.load("images/tools.png")
 Wall_image = pygame.image.load("images/Wall.png")
 
-
-print(len(map))
-
 # set up the window
 DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), 0, 32)
 pygame.display.set_caption('Saper')
 
 background_image = pygame.image.load("images/background.png")
-gamestate = 0
 
+loop = 1
+flaga = 1
 while True:
-
+    if loop > len(Solutions[min_sol])-1:
+        flaga = 0
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+            
+    if flaga == 1:
+        if Solutions[min_sol][loop] == "R":
+            if x < len(map)-1:
+                x_r = x + 1
+                y_r = y
 
-        elif event.type == KEYUP:
-            if event.key == K_RIGHT:
-                if x < len(map)-1:
-                    x_r = x + 1
-                    y_r = y
+        elif Solutions[min_sol][loop] == "L":
+            if x > 0:
+                x_r = x - 1
+                y_r = y
 
-            elif event.key == K_LEFT:
-                if x > 0:
-                    x_r = x - 1
-                    y_r = y
+        elif Solutions[min_sol][loop] == "D":
+            if y < len(map[0])-1:
+                y_r = y + 1
+                x_r = x
 
-            elif event.key == K_DOWN:
-                if y < len(map[0])-1:
-                    y_r = y + 1
-                    x_r = x
-
-            elif event.key == K_UP:
-                if y > 0:
-                    y_r = y - 1
-                    x_r = x
+        elif Solutions[min_sol][loop] == "U":
+            if y > 0:
+                y_r = y - 1
+                x_r = x
+        loop = loop + 1
 
         if x_r != x or y_r != y:
             if map[x_r][y_r] is None:
