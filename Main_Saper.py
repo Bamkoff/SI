@@ -13,31 +13,31 @@ from pygame.locals import *
 Solutions = []
 
 def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
-    #print("odwiedzono punktow: ",left)
-    #print("wykonane operacje:", Curr_operations)
-
     for i in range(len(destination)):
-            if destination[i][0] == a and  destination[i][1] == b:
-                left = left + 1
+        if (destination[i][0] == a + 1 and destination[i][1] == b) or (
+                destination[i][0] == a - 1 and destination[i][1] == b) or (
+                destination[i][0] == a and destination[i][1] == b + 1) or (
+                destination[i][0] == a and destination[i][1] == b - 1):
+            Curr_operations.append("B")
+            left = left - 1
 
-    if left == len(destination):
+    if left == 0:
         Solutions.append(Curr_operations)
         return 0
-
-    if anti_loop < 40 :
+    
+    if anti_loop < 80:
         anti_loop = anti_loop + 1
         if Curr_operations[len(Curr_operations) - 1] != "L":
             if Grid[a + 1][b] is None:
                 operations1 = Curr_operations[:]
                 operations1.append("R")
-
                 dfs_find(Grid, operations1, a + 1, b, destination, left, anti_loop)
 
         if Curr_operations[len(Curr_operations) - 1] != "R":
             if Grid[a - 1][b] is None:
                 operations2 = Curr_operations[:]
                 operations2.append("L")
-                dfs_find(Grid, operations2, a - 1, b, destination, left, anti_loop)
+                dfs_find(Grid, operations2, a - 1, b, destination, left,anti_loop)
 
         if Curr_operations[len(Curr_operations) - 1] != "U":
             if Grid[a][b + 1] is None:
@@ -50,7 +50,7 @@ def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
                 operations4 = Curr_operations[:]
                 operations4.append("U")
                 dfs_find(Grid, operations4, a, b - 1, destination, left, anti_loop)
-
+        return 0
 
 
 pygame.init()
@@ -64,14 +64,14 @@ WINDOW_HEIGHT = 700
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Saper(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Bomb(980, "A"), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), None, None, None, None, None, None, None, None, None, None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(),Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
@@ -87,21 +87,23 @@ y = 0
 x_r = 0
 y_r = 0
 
-print(Solutions)
+dest = []
 
 for i in range(len(map)):
     for j in range(len(map[i])):
         if map[i][j].__class__.__name__ == "Saper":
             x = i
             y = j
+        elif map[i][j].__class__.__name__ == "Bomb":
+            dest.append([i,j])
 
-dfs_find(map, ["N"], x, y, [[17,2],[17,11]], 0, 0)
+
+
+dfs_find(map, ["N"], x, y, dest, len(dest), 0)
 min_sol = 0
 for i in range(len(Solutions)):
-    if len(Solutions[i]) > len(Solutions[min_sol]):
+    if len(Solutions[i]) < len(Solutions[min_sol]):
         min_sol = i
-
-print(min_sol)
 
 detonated = 0
 defused = 0
@@ -133,8 +135,18 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-            
+
     if flaga == 1:
+        if Solutions[min_sol][loop] == "B":
+            if map[x+1][y].__class__.__name__ == "Bomb":
+                defused = defused + map[x][y].defuse(map[x+1][y])
+            if map[x-1][y].__class__.__name__ == "Bomb":
+                defused = defused + map[x][y].defuse(map[x-1][y])
+            if map[x][y+1].__class__.__name__ == "Bomb":
+                defused = defused + map[x][y].defuse(map[x][y+1])
+            if map[x][y-1].__class__.__name__ == "Bomb":
+                defused = defused + map[x][y].defuse(map[x][y-1])
+
         if Solutions[min_sol][loop] == "R":
             if x < len(map)-1:
                 x_r = x + 1
@@ -169,7 +181,7 @@ while True:
                 y_r = y
 
             elif map[x_r][y_r].__class__.__name__ == "Bomb":
-                defused = map[x][y].defuse(map[x_r][y_r])
+                defused = defused + map[x][y].defuse(map[x_r][y_r])
                 x_r = x
                 y_r = y
 

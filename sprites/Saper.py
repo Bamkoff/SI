@@ -10,7 +10,7 @@ from pygame.locals import *
 class Saper():
     def __init__(self):
 
-        self.tool = "none"
+        self.tool = "A"
 
     def change_tool(self, tool_box):
         self.tool = tool_box.tool
