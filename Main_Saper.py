@@ -13,43 +13,59 @@ from pygame.locals import *
 Solutions = []
 
 def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
-    for i in range(len(destination)):
-        if (destination[i][0] == a + 1 and destination[i][1] == b) or (
-                destination[i][0] == a - 1 and destination[i][1] == b) or (
-                destination[i][0] == a and destination[i][1] == b + 1) or (
-                destination[i][0] == a and destination[i][1] == b - 1):
+    dest = destination[:]
+    licz = 0
+    for i in range(len(dest)):
+        if dest[i-licz][0] == a + 1 and dest[i-licz][1] == b:
+            dest.pop(i-licz)
             Curr_operations.append("B")
+            licz = licz + 1
+            left = left - 1
+        elif dest[i-licz][0] == a - 1 and dest[i-licz][1] == b:
+            dest.pop(i-licz)
+            Curr_operations.append("B")
+            licz = licz + 1
+            left = left - 1
+        elif dest[i-licz][0] == a and dest[i-licz][1] == b + 1:
+            dest.pop(i-licz)
+            Curr_operations.append("B")
+            licz = licz + 1
+            left = left - 1
+        elif dest[i-licz][0] == a and dest[i-licz][1] == b - 1:
+            dest.pop(i-licz)
+            Curr_operations.append("B")
+            licz = licz + 1
             left = left - 1
 
     if left == 0:
         Solutions.append(Curr_operations)
         return 0
-    
+
     if anti_loop < 80:
         anti_loop = anti_loop + 1
         if Curr_operations[len(Curr_operations) - 1] != "L":
             if Grid[a + 1][b] is None:
                 operations1 = Curr_operations[:]
                 operations1.append("R")
-                dfs_find(Grid, operations1, a + 1, b, destination, left, anti_loop)
+                dfs_find(Grid, operations1, a + 1, b, dest, left, anti_loop)
 
         if Curr_operations[len(Curr_operations) - 1] != "R":
             if Grid[a - 1][b] is None:
                 operations2 = Curr_operations[:]
                 operations2.append("L")
-                dfs_find(Grid, operations2, a - 1, b, destination, left,anti_loop)
+                dfs_find(Grid, operations2, a - 1, b, dest, left,anti_loop)
 
         if Curr_operations[len(Curr_operations) - 1] != "U":
             if Grid[a][b + 1] is None:
                 operations3 = Curr_operations[:]
                 operations3.append("D")
-                dfs_find(Grid, operations3, a, b + 1, destination, left, anti_loop)
+                dfs_find(Grid, operations3, a, b + 1, dest, left, anti_loop)
 
         if Curr_operations[len(Curr_operations) - 1] != "D":
             if Grid[a][b - 1] is None:
                 operations4 = Curr_operations[:]
                 operations4.append("U")
-                dfs_find(Grid, operations4, a, b - 1, destination, left, anti_loop)
+                dfs_find(Grid, operations4, a, b - 1, dest, left, anti_loop)
         return 0
 
 
@@ -71,15 +87,15 @@ map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), 
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(),Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), None, None, None, None, None, None, Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Bomb(980, "A"), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Bomb(980, "A"), None, None, None, None, Wall(), None, None, None, None, None, Bomb(980, "A"), Wall()],
+       [Wall(), Wall(), Bomb(980, "A"), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
 	   [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
 
 x = 0

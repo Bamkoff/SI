@@ -17,7 +17,7 @@ class Saper():
         tool_box.change_tool()
 
     def defuse(self, bomb):
-        if bomb.type == self.tool:
+        if bomb.type == self.tool and bomb.time > 0:
             bomb.time = -1
             bomb.type = "done"
             return 1
