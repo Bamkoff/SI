@@ -14,3 +14,6 @@ class Bomb:
     def tick(self):
         if self.time > 0:
             self.time = self.time - 1
+
+    def priority(self):
+        return self.time
