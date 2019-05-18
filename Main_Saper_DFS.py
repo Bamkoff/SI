@@ -18,22 +18,22 @@ def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
     for i in range(len(dest)):
         if dest[i-licz][0] == a + 1 and dest[i-licz][1] == b:
             dest.pop(i-licz)
-            Curr_operations.append("B")
+            Curr_operations.append("B_R")
             licz = licz + 1
             left = left - 1
         elif dest[i-licz][0] == a - 1 and dest[i-licz][1] == b:
             dest.pop(i-licz)
-            Curr_operations.append("B")
-            licz = licz + 1
-            left = left - 1
-        elif dest[i-licz][0] == a and dest[i-licz][1] == b + 1:
-            dest.pop(i-licz)
-            Curr_operations.append("B")
+            Curr_operations.append("B_L")
             licz = licz + 1
             left = left - 1
         elif dest[i-licz][0] == a and dest[i-licz][1] == b - 1:
             dest.pop(i-licz)
-            Curr_operations.append("B")
+            Curr_operations.append("B_U")
+            licz = licz + 1
+            left = left - 1
+        elif dest[i-licz][0] == a and dest[i-licz][1] == b + 1:
+            dest.pop(i-licz)
+            Curr_operations.append("B_D")
             licz = licz + 1
             left = left - 1
 
@@ -153,32 +153,22 @@ while True:
             sys.exit()
 
     if flaga == 1:
-        if Solutions[min_sol][loop] == "B":
-            if map[x+1][y].__class__.__name__ == "Bomb":
-                defused = defused + map[x][y].defuse(map[x+1][y])
-            if map[x-1][y].__class__.__name__ == "Bomb":
-                defused = defused + map[x][y].defuse(map[x-1][y])
-            if map[x][y+1].__class__.__name__ == "Bomb":
-                defused = defused + map[x][y].defuse(map[x][y+1])
-            if map[x][y-1].__class__.__name__ == "Bomb":
-                defused = defused + map[x][y].defuse(map[x][y-1])
-
-        if Solutions[min_sol][loop] == "R":
+        if Solutions[min_sol][loop] == "R" or  Solutions[min_sol][loop] == "B_R":
             if x < len(map)-1:
                 x_r = x + 1
                 y_r = y
 
-        elif Solutions[min_sol][loop] == "L":
+        elif Solutions[min_sol][loop] == "L" or  Solutions[min_sol][loop] == "B_L":
             if x > 0:
                 x_r = x - 1
                 y_r = y
 
-        elif Solutions[min_sol][loop] == "D":
+        elif Solutions[min_sol][loop] == "D" or  Solutions[min_sol][loop] == "B_D":
             if y < len(map[0])-1:
                 y_r = y + 1
                 x_r = x
 
-        elif Solutions[min_sol][loop] == "U":
+        elif Solutions[min_sol][loop] == "U" or  Solutions[min_sol][loop] == "B_U":
             if y > 0:
                 y_r = y - 1
                 x_r = x

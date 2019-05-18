@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22433ca2-1040-4ab3-bcf6-3054bafc7d4f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../Przyklad/pygame-elsa/elsa_gra.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Przyklad/pygame-elsa/elsa_gra.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_Saper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Saper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/Saper.py" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/Saper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_Saper.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,23 +14,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Main_Saper.py">
+        <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="96" column="61" selection-start-line="96" selection-start-column="61" selection-end-line="96" selection-end-column="61" />
-              <folding>
-                <element signature="e#44#62#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../SI(zapas)/SI-master/Main_Saper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="38" column="120" selection-start-line="19" selection-end-line="38" selection-end-column="120" />
-            </state>
+            <state relative-caret-position="-136" />
           </provider>
         </entry>
       </file>
@@ -53,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sprites/Tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="323">
               <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
               <folding>
                 <element signature="e#43#53#0" expanded="true" />
@@ -106,7 +90,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-14" />
     <option name="y" value="-14" />
     <option name="width" value="1346" />
@@ -138,7 +122,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Przyklad/pygame-elsa" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Main_Saper_DFS.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -153,8 +137,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Main_Saper">
-    <configuration name="Main_Saper" type="PythonConfigurationType" factoryName="Python">
+  <component name="RunManager">
+    <configuration name="Main_Saper_DFS" type="PythonConfigurationType" factoryName="Python">
       <module name="SI" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -166,7 +150,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_Saper.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_Saper_DFS.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -175,32 +159,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="elsa_gra" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="pygame-elsa" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../Przyklad/pygame-elsa" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../Przyklad/pygame-elsa/elsa_gra.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.elsa_gra" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -217,13 +175,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24330357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31587562" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31587562" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -282,7 +241,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../SI(zapas)/SI-master/Main_Saper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
+        <state relative-caret-position="529">
           <caret line="38" column="120" selection-start-line="19" selection-end-line="38" selection-end-column="120" />
         </state>
       </provider>
@@ -299,7 +258,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sprites/Tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="323">
           <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
           <folding>
             <element signature="e#43#53#0" expanded="true" />
@@ -319,6 +278,11 @@
         <state relative-caret-position="272">
           <caret line="19" column="51" selection-start-line="19" selection-start-column="51" selection-end-line="19" selection-end-column="51" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136" />
       </provider>
     </entry>
   </component>
