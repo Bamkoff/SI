@@ -41,7 +41,7 @@ def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
         Solutions.append(Curr_operations)
         return 0
 
-    if anti_loop < 80:
+    if anti_loop < 100:
         anti_loop = anti_loop + 1
         if Curr_operations[len(Curr_operations) - 1] != "L":
             if Grid[a + 1][b] is None:
@@ -78,24 +78,24 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Saper(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Bomb(980, "A"), Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(),Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), None, None, None, None, None, None, Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), Wall()],
-       [Wall(), Bomb(980, "A"), None, None, None, None, Wall(), None, None, None, None, None, Bomb(980, "A"), Wall()],
-       [Wall(), Wall(), Bomb(980, "A"), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Saper(), Wall(), None, None, None, Wall(), Bomb(980, "A"), None, Wall(), Bomb(980, "A"), Wall(), Wall(), Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, Wall(), Wall(), None, Wall(), None, None, None, Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, Wall()],
+       [Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), None, Wall(), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall()],
+       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Bomb(980, "A"), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
 	   [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
 
 x = 0
@@ -141,7 +141,7 @@ DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), 0, 32)
 pygame.display.set_caption('Saper')
 
 background_image = pygame.image.load("images/background.png")
-
+print(len(Solutions[min_sol]))
 loop = 1
 flaga = 1
 while True:

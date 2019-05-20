@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22433ca2-1040-4ab3-bcf6-3054bafc7d4f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Main_Saper_Astar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/Bomb.py" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/Bomb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_Saper_Astar.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Saper_Astar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_Saper_DFS.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Saper_DFS.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,44 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Main_Saper_Astar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="140" column="127" lean-forward="true" selection-start-line="140" selection-start-column="127" selection-end-line="140" selection-end-column="127" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sprites/Bomb.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sprites/Saper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -74,15 +37,16 @@
         <option value="$PROJECT_DIR$/sprites/Tools.py" />
         <option value="$PROJECT_DIR$/move/DFS.py" />
         <option value="$PROJECT_DIR$/sprites/Saper.py" />
-        <option value="$PROJECT_DIR$/Main_Saper.py" />
         <option value="$PROJECT_DIR$/sprites/Bomb.py" />
+        <option value="$PROJECT_DIR$/Main_Saper_DFS.py" />
+        <option value="$PROJECT_DIR$/Main_Saper.py" />
         <option value="$PROJECT_DIR$/Main_Saper_Astar.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="7" />
-    <option name="y" value="-14" />
+    <option name="x" value="963" />
+    <option name="y" value="306" />
     <option name="width" value="1346" />
     <option name="height" value="710" />
   </component>
@@ -112,7 +76,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Main_Saper_Astar.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Main_Saper.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -170,8 +134,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Test mapy" type="PythonConfigurationType" factoryName="Python">
+      <module name="SI" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Bankoff\AppData\Local\Programs\Python\Python37-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_Saper.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Main_Saper_DFS" />
+      <item itemvalue="Python.Test mapy" />
       <item itemvalue="Python.Main_Saper_Astar" />
     </list>
   </component>
@@ -196,8 +182,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3156664" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3998441" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.14185503" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.8890815" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -237,7 +223,6 @@
     <entry file="file://$PROJECT_DIR$/sprites/Bomb_A.py" />
     <entry file="file://$PROJECT_DIR$/sprites/Bomb_C.py" />
     <entry file="file://$PROJECT_DIR$/move/DFS.py" />
-    <entry file="file://$PROJECT_DIR$/Main_Saper.py" />
     <entry file="file://$USER_HOME$/SI(zapas)/SI-master/Main_Saper.py" />
     <entry file="file://$USER_HOME$/Przyklad/pygame-elsa/elsa_gra.py" />
     <entry file="file://$PROJECT_DIR$/sprites/Wall.py">
@@ -271,17 +256,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sprites/Bomb.py">
+    <entry file="file://$PROJECT_DIR$/../S/Main_Saper.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_Saper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+        <state relative-caret-position="238">
+          <caret line="19" selection-start-line="19" selection-end-line="38" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_Saper_Astar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="136" column="105" lean-forward="true" selection-start-line="136" selection-start-column="105" selection-end-line="136" selection-end-column="105" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        <state relative-caret-position="493">
+          <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sprites/Bomb.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -289,13 +291,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main_Saper_Astar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="140" column="127" lean-forward="true" selection-start-line="140" selection-start-column="127" selection-end-line="140" selection-end-column="127" />
         </state>
       </provider>
     </entry>
