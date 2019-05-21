@@ -21,6 +21,7 @@ def A_star(Grid, start, dest, priority):
     cameFrom = []
     gScore = []
     fScore = []
+    Grid2 = []
     goal = dest[priority.index(min(priority))]
     dest.pop(priority.index(min(priority)))
     priority.pop(priority.index(min(priority)))
@@ -29,10 +30,15 @@ def A_star(Grid, start, dest, priority):
         gScore.append([])
         fScore.append([])
         cameFrom.append([])
+        Grid2.append([])
         for j in range(len(Grid[i])):
             gScore[i].append(1000)
             fScore[i].append(1000)
             cameFrom[i].append([i, j])
+            if Grid[i][j] is None or Grid[i][j].__class__.__name__ == "Saper" or (i == goal[0] and j == goal[1]):
+                Grid2[i].append(None)
+            else:
+                Grid2[i].append(Wall())
 
     gScore[start[0]][start[1]] = 0
     fScore[start[0]][start[1]] = heuristic_cost(start, goal)
@@ -54,16 +60,16 @@ def A_star(Grid, start, dest, priority):
 
         for k in range(4):
             flag2 = False
-            if k == 0 and Grid[current[0] + 1][current[1]].__class__.__name__ != "Wall":
+            if k == 0 and Grid2[current[0] + 1][current[1]].__class__.__name__ != "Wall":
                 neighbor = [current[0] + 1, current[1]]
                 flag2 = True
-            if k == 1 and Grid[current[0] - 1][current[1]].__class__.__name__ != "Wall":
+            if k == 1 and Grid2[current[0] - 1][current[1]].__class__.__name__ != "Wall":
                 flag2 = True
                 neighbor = [current[0] - 1, current[1]]
-            if k == 2 and Grid[current[0]][current[1] + 1].__class__.__name__ != "Wall":
+            if k == 2 and Grid2[current[0]][current[1] + 1].__class__.__name__ != "Wall":
                 flag2 = True
                 neighbor = [current[0], current[1] + 1]
-            if k == 3 and Grid[current[0]][current[1] - 1].__class__.__name__ != "Wall":
+            if k == 3 and Grid2[current[0]][current[1] - 1].__class__.__name__ != "Wall":
                 flag2 = True
                 neighbor = [current[0], current[1] - 1]
 
@@ -107,7 +113,7 @@ def A_star(Grid, start, dest, priority):
         Solution.append(Path[i])
 
     if len(dest) > 0:
-        A_star(Grid, goal[:], dest, priority)
+        A_star(Grid, cameFrom[goal[0]][goal[1]], dest, priority)
 
 
 pygame.init()
@@ -119,25 +125,25 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-	[Wall(), Saper(), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
-	[Wall(), None, Wall(), Wall(), None, Wall(), Bomb(980, "A"), Wall(), None, Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, None, Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, None, None, Wall(), None, None, Wall()],
-	[Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), None, Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), None, Wall(), Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, None, None, Wall(), None, None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), Wall(), Wall(), Wall()],
-	[Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, Wall(), Bomb(980, "A"), Wall(), Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), None, None, None, Wall(), Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, None, Wall(), None, None, Wall()],
-	[Wall(), None, None, None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), None, Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, Wall(), None, Wall(), Bomb(980, "A"), Wall(), Wall(), None, Wall()],
-	[Wall(), Bomb(980, "A"), Wall(), None, None, None, None, Wall(), None, None, None, None, None, Wall()],
-	[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+       [Wall(), Bomb(980, "A"), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), None, Wall(), Wall(), Wall(), Wall(), None, None, None, Bomb(980, "A"), None, None, Wall(), Wall()],
+       [Wall(), None, Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall()],
+       [Wall(), None, Wall(), Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), None, Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall(), Wall(), Wall()],
+       [Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall(), Wall(), Wall()],
+       [Wall(), Wall(), None, None, None, None, None, Saper(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall()],
+       [Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall()],
+       [Wall(), Wall(), Wall(), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), None, Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Bomb(980, "A"), Bomb(980, "A"), None, Bomb(980, "A"), Wall(), Bomb(980, "A"), Bomb(100, "A"), None, Bomb(980, "A"), Wall(), Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
 
 x = 0
 y = 0
