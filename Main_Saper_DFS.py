@@ -79,7 +79,7 @@ WINDOW_HEIGHT = 700
 
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Saper(), Wall(), None, None, None, Wall(), Bomb(980, "A"), None, Wall(), Bomb(980, "A"), Wall(), Wall(), Wall()],
+       [Wall(), Saper(), Wall(), None, None, None, Wall(), Bomb(980, "A"), None, Wall(), Bomb(980, "A"), Wall(), Wall(),Wall()],
        [Wall(), None, Wall(), None, Wall(), None, Wall(), Wall(), None, Wall(), None, None, None, Wall()],
        [Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, Wall()],
        [Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), None, Wall(), None, Wall()],
@@ -87,7 +87,8 @@ map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), 
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall()],
        [Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), None, Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Bomb(980, "A"), None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Bomb(980, "A"), None,
+        Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
@@ -96,7 +97,7 @@ map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), 
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
        [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-	   [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
 
 x = 0
 y = 0
