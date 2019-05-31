@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-import pygame, sys, os
+import pygame, sys, os, random
 from sprites.Bomb import Bomb
 from sprites.Tools import Tools
 from sprites.Saper import Saper
@@ -11,15 +11,16 @@ from pygame.locals import *
 
 def check_type(Grid, x, y):
     if x < 0 or x > len(Grid)-1 or y < 0 or y > len(Grid[0])-1:
-        return str(4)
-    if Grid[x][y] is None:
         return str(0)
+    if Grid[x][y] is None:
+        return str(10)
     if Grid[x][y].__class__.__name__ == "Wall":
         return str(1)
-    if Grid[x][y].__class__.__name__ == "Bomb" and Grid[x][y].get_type() == "done":
-        return str(2)
-    else:
-        return str(3)
+    if Grid[x][y].__class__.__name__ == "Bomb":
+        if Grid[x][y].type == "done":
+            return str(5)
+        else:
+            return str(50)
 
 def get_surround(Grid, x, y):
     s = ""
@@ -49,6 +50,24 @@ def write_to_file(file, string):
     f.write("\n")
     f.close()
 
+def read_map(file):
+    f = open("maps/" + file, "r")
+    s = f.read()
+    map.append([])
+    index = 0
+    for i in range(len(s)-1):
+        if s[i] == "0":
+            map[index].append(None)
+        if s[i] == "1":
+            map[index].append(Wall())
+        if s[i] == "2":
+            map[index].append(Saper())
+        if s[i] == "3":
+            map[index].append(Bomb(random.randint(400, 601), "A"))
+        if s[i] == "\n":
+            map.append([])
+            index = index + 1
+
 pygame.init()
 
 FPS = 30 # frames per second setting
@@ -57,26 +76,8 @@ fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
-map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Bomb(980, "A"), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), None, Wall(), Wall(), Wall(), Wall(), None, None, None, Bomb(980, "A"), None, None, Wall(), Wall()],
-       [Wall(), None, Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall()],
-       [Wall(), None, Wall(), Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), None, Wall(), Wall(), None, None, None, None, None, None, Wall(), Wall(), Wall(), Wall()],
-       [Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), None, None, None, None, None, Saper(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall()],
-       [Wall(), Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall()],
-       [Wall(), Wall(), Wall(), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), None, Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Bomb(980, "A"), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Bomb(980, "A"), Bomb(980, "A"), None, Bomb(980, "A"), Wall(), Bomb(980, "A"), Bomb(980, "A"), None, Bomb(980, "A"), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+map = []
+read_map("SUPER-SEBA-BY-DUNDAL.txt")
 
 x = 0
 y = 0
@@ -109,7 +110,13 @@ DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), 0, 32)
 pygame.display.set_caption('Saper')
 
 background_image = pygame.image.load("images/background.png")
-loop = 1
+
+prev_output1 = 0
+prev_output2 = 0
+counter = 0
+flag1 = True
+flag2 = False
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -120,6 +127,17 @@ while True:
     write_to_file("wabbit_move", s)
     output = float(os.popen("vw -i wabbit_model wabbit_move -p /dev/stdout --quiet").read())
     print(output)
+
+    if prev_output1 == output or prev_output2 == output:
+        counter = counter + 1
+
+    if counter > 10:
+        counter = 0
+        output = random.randint(0,5)
+
+    prev_output2 = prev_output1
+    prev_output1 = output
+
 
     if output < 1.5:
         if x < len(map)-1:

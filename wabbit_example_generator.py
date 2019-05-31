@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-import pygame, sys, os
+import pygame, sys, os, random, time
 from sprites.Bomb import Bomb
 from sprites.Tools import Tools
 from sprites.Saper import Saper
@@ -138,23 +138,23 @@ def read_map(file):
         if s[i] == "2":
             map[index].append(Saper())
         if s[i] == "3":
-            map[index].append(Bomb(200,"A"))
+            map[index].append(Bomb(random.randint(400, 601), "A"))
         if s[i] == "\n":
             map.append([])
             index = index + 1
 
-
 def check_type(Grid, x, y):
     if x < 0 or x > len(Grid)-1 or y < 0 or y > len(Grid[0])-1:
-        return str(4)
-    if Grid[x][y] is None:
         return str(0)
+    if Grid[x][y] is None:
+        return str(10)
     if Grid[x][y].__class__.__name__ == "Wall":
         return str(1)
-    if Grid[x][y].__class__.__name__ == "Bomb" and Grid[x][y].get_type() == "done":
-        return str(2)
-    else:
-        return str(3)
+    if Grid[x][y].__class__.__name__ == "Bomb":
+        if Grid[x][y].type == "done":
+            return str(5)
+        else:
+            return str(50)
 
 def get_surround(Grid, x, y):
     s = ""
@@ -184,48 +184,17 @@ def write_to_file(file, string):
     f.write("\n")
     f.close()
 
-pygame.init()
-
-FPS = 30 # frames per second setting
-fpsClock = pygame.time.Clock()
-
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 700
-
 maps = (os.popen("ls maps").read()).split("\n")
-
 
 x = 0
 y = 0
 x_r = 0
 y_r = 0
-
-dest = []
-priority = []
-
-detonated = 0
-defused = 0
-
-Saper_image = pygame.image.load("images/saper.png")
-Saper_A_image = pygame.image.load("images/saper_A.png")
-Saper_B_image = pygame.image.load("images/saper_B.png")
-Saper_C_image = pygame.image.load("images/saper_C.png")
-Bomb_A_image = pygame.image.load("images/Bomb_A.png")
-Bomb_B_image = pygame.image.load("images/Bomb_B.png")
-Bomb_C_image = pygame.image.load("images/Bomb_C.png")
-Thumbs_up_image = pygame.image.load("images/Thumbs_up.png")
-Hole_image = pygame.image.load("images/Hole.png")
-Tool_image = pygame.image.load("images/tools.png")
-Wall_image = pygame.image.load("images/Wall.png")
-
-# set up the window
-DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), 0, 32)
-pygame.display.set_caption('Saper')
-
-background_image = pygame.image.load("images/background.png")
 loop = 0
 counter1 = 0
+counter2 = 0
 flag = True
+
 while True:
     if loop >= len(Solution):
         loop = 0
@@ -245,21 +214,19 @@ while True:
                     dest.append([i, j])
                     priority.append(heuristic_cost([x, y], [i, j]))
 
-        print(map)
         Solution = []
 
         A_star(map, [x, y], dest, priority)
 
         if counter1 >= len(maps)-2:
+            counter2 = counter2 + 1
+            couter1 = 0
+        else:
+            counter1 = counter1 + 1
+
+        if counter2 > 100:
             os.popen("vw wabbit_examples -f wabbit_model")
-            pygame.quit()
-            sys.exit()
-
-        counter1 = counter1 + 1
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
+            time.sleep(5)
             sys.exit()
 
     s = ""
@@ -304,56 +271,13 @@ while True:
             y_r = y
 
         elif map[x_r][y_r].__class__.__name__ == "Bomb":
-            defused = defused + map[x][y].defuse(map[x_r][y_r])
+            map[x][y].defuse(map[x_r][y_r])
             x_r = x
             y_r = y
 
-    DISPLAYSURF.blit(background_image, (0, 0))
     for i in range(len(map)):
         for j in range(len(map[i])):
-            if map[i][j] is not None:
-                if map[i][j].__class__.__name__ == "Saper":
-                     if map[i][j].tool == "A":
-                        DISPLAYSURF.blit(Saper_A_image, [i*50, j*50])
-
-                     elif map[i][j].tool == "B":
-                        DISPLAYSURF.blit(Saper_B_image, [i*50, j*50])
-
-                     elif map[i][j].tool == "C":
-                        DISPLAYSURF.blit(Saper_C_image, [i*50, j*50])
-
-                     elif map[i][j].tool == "none":
-                        DISPLAYSURF.blit(Saper_image, [i*50, j*50])
-
-                elif map[i][j].__class__.__name__ == "Bomb":
-
-                    if map[i][j].time == 0 and map[i][j] != "exploded":
-                        map[i][j].type = "exploded"
-                        detonated += 1
-
-                    if map[i][j].type == "exploded":
-                        DISPLAYSURF.blit(Hole_image, [i * 50, j * 50])
-
-                    elif map[i][j].type == "done":
-                        DISPLAYSURF.blit(Thumbs_up_image, [i * 50, j * 50])
-
-                    elif map[i][j].type == "A":
-                        DISPLAYSURF.blit(Bomb_A_image, [i * 50, j * 50])
-
-                    elif map[i][j].type == "B":
-                        DISPLAYSURF.blit(Bomb_B_image, [i * 50, j * 50])
-
-                    elif map[i][j].type == "C":
-                        DISPLAYSURF.blit(Bomb_C_image, [i * 50, j * 50])
-                    map[i][j].tick()
-
-                elif map[i][j].__class__.__name__ == "Tools":
-                    DISPLAYSURF.blit(Tool_image, [i * 50, j * 50])
-
-                elif map[i][j].__class__.__name__ == "Wall":
-                    DISPLAYSURF.blit(Wall_image, [i * 50, j * 50])
-
-    # Refresh Screen
-    pygame.display.flip()
-
-    fpsClock.tick(FPS)
+            if map[i][j].__class__.__name__ == "Bomb":
+                if map[i][j].time == 0 and map[i][j] != "exploded":
+                    map[i][j].type = "exploded"
+                map[i][j].tick()

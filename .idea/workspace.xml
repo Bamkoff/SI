@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22433ca2-1040-4ab3-bcf6-3054bafc7d4f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/A_star - opis.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/MAPA-LATWA.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/MAPA-TRUDNA.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/SUPER-SEBA-BY-DUNDAL.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/map2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/map3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/map_wolololo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wabbit_example_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wabbit_examples" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wabbit_model" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wabbit_move" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wabbit_saper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_Saper_Astar.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Saper_Astar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_Saper_DFS.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Saper_DFS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/MAPA-LATWA.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/MAPA-TRUDNA.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/SUPER-SEBA-BY-DUNDAL.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/map2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/map3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapy/map_wolololo.txt" beforeDir="false" />
-    </list>
+    <list default="true" id="22433ca2-1040-4ab3-bcf6-3054bafc7d4f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +13,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main_Saper_Astar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
+            <state relative-caret-position="731">
               <caret line="223" column="14" selection-start-line="223" selection-start-column="14" selection-end-line="223" selection-end-column="14" />
               <folding>
                 <element signature="e#44#62#0" expanded="true" />
@@ -48,7 +25,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-493">
+            <state relative-caret-position="2516">
               <caret line="153" column="80" lean-forward="true" selection-start-line="153" selection-start-column="80" selection-end-line="153" selection-end-column="80" />
             </state>
           </provider>
@@ -87,7 +64,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="810" />
     <option name="width" value="558" />
     <option name="height" value="728" />
@@ -223,14 +200,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17857143" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1391162" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.1391162" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.88870704" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -344,7 +320,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main_Saper_Astar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
+        <state relative-caret-position="731">
           <caret line="223" column="14" selection-start-line="223" selection-start-column="14" selection-end-line="223" selection-end-column="14" />
           <folding>
             <element signature="e#44#62#0" expanded="true" />
@@ -354,7 +330,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main_Saper_DFS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-493">
+        <state relative-caret-position="2516">
           <caret line="153" column="80" lean-forward="true" selection-start-line="153" selection-start-column="80" selection-end-line="153" selection-end-column="80" />
         </state>
       </provider>
