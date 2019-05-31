@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-import pygame, sys
+import pygame, sys, random
 from sprites.Bomb import Bomb
 from sprites.Tools import Tools
 from sprites.Saper import Saper
@@ -68,6 +68,23 @@ def dfs_find(Grid, Curr_operations, a, b, destination, left, anti_loop):
                 dfs_find(Grid, operations4, a, b - 1, dest, left, anti_loop)
         return 0
 
+def read_map(file):
+    f = open("maps/" + file, "r")
+    s = f.read()
+    map.append([])
+    index = 0
+    for i in range(len(s)-1):
+        if s[i] == "0":
+            map[index].append(None)
+        if s[i] == "1":
+            map[index].append(Wall())
+        if s[i] == "2":
+            map[index].append(Saper())
+        if s[i] == "3":
+            map[index].append(Bomb(random.randint(400, 601), "A"))
+        if s[i] == "\n":
+            map.append([])
+            index = index + 1
 
 pygame.init()
 
@@ -77,27 +94,8 @@ fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
-map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Saper(), Wall(), None, None, None, Wall(), Bomb(980, "A"), None, Wall(), Bomb(980, "A"), Wall(), Wall(),Wall()],
-       [Wall(), None, Wall(), None, Wall(), None, Wall(), Wall(), None, Wall(), None, None, None, Wall()],
-       [Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, Wall()],
-       [Wall(), None, None, None, Wall(), Wall(), None, None, None, Wall(), None, Wall(), None, Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall(), None, Wall()],
-       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, Wall(), None, Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Bomb(980, "A"), None,
-        Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+map = []
+read_map("MAPA-LATWA.txt")
 
 x = 0
 y = 0
@@ -114,9 +112,8 @@ for i in range(len(map)):
         elif map[i][j].__class__.__name__ == "Bomb":
             dest.append([i,j])
 
-
-
 dfs_find(map, ["N"], x, y, dest, len(dest), 0)
+
 min_sol = 0
 for i in range(len(Solutions)):
     if len(Solutions[i]) < len(Solutions[min_sol]):
@@ -144,32 +141,32 @@ pygame.display.set_caption('Saper')
 background_image = pygame.image.load("images/background.png")
 print(len(Solutions[min_sol]))
 loop = 1
-flaga = 1
+flag = True
 while True:
     if loop > len(Solutions[min_sol])-1:
-        flaga = 0
+        flag = False
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    if flaga == 1:
-        if Solutions[min_sol][loop] == "R" or  Solutions[min_sol][loop] == "B_R":
+    if flag:
+        if Solutions[min_sol][loop] == "R" or Solutions[min_sol][loop] == "B_R":
             if x < len(map)-1:
                 x_r = x + 1
                 y_r = y
 
-        elif Solutions[min_sol][loop] == "L" or  Solutions[min_sol][loop] == "B_L":
+        elif Solutions[min_sol][loop] == "L" or Solutions[min_sol][loop] == "B_L":
             if x > 0:
                 x_r = x - 1
                 y_r = y
 
-        elif Solutions[min_sol][loop] == "D" or  Solutions[min_sol][loop] == "B_D":
+        elif Solutions[min_sol][loop] == "D" or Solutions[min_sol][loop] == "B_D":
             if y < len(map[0])-1:
                 y_r = y + 1
                 x_r = x
 
-        elif Solutions[min_sol][loop] == "U" or  Solutions[min_sol][loop] == "B_U":
+        elif Solutions[min_sol][loop] == "U" or Solutions[min_sol][loop] == "B_U":
             if y > 0:
                 y_r = y - 1
                 x_r = x

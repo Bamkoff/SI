@@ -2,27 +2,20 @@
 # -*- coding: utf-8 -*-
 
 
-import pygame, sys, random
+import pygame, sys, os
 from sprites.Bomb import Bomb
 from sprites.Tools import Tools
 from sprites.Saper import Saper
 from sprites.Wall import Wall
 from pygame.locals import *
 
-# lista z ścieżką do przejścia znalezioną przez algorytm A*
-Solution = []
 
-# lista zawierająca mapę
+Solution = []
 map = []
 
-# funkcja heurystyczna (do obliczania optymistycznej odległości między dwoma punktami)
 def heuristic_cost(start, goal):
     return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
-# procedura rekurencyjna A*
-# dla podanych współrzędnych bomb na danej mapie wyszukuje najkrótszą ścierzkę z kordynatów startowych
-# odwiedzając wszystkie podane bomby zaczynając od tych z najniższym priorytetem (czasem do wybuchu)
-# działanie funkcji A_star opisane w pliku tekstowym "A_star - opis.txt"
 def A_star(Grid, start, dest, priority):
     Closed_set = []
     Open_set = [start]
@@ -126,11 +119,12 @@ def A_star(Grid, start, dest, priority):
             Solution.append("D")
         elif Path[i][0] == Path[i-1][0] and Path[i][1] - 1 == Path[i-1][1]:
             Solution.append("U")
+    for i in range(len(dest)):
+        priority[i] = heuristic_cost(cameFrom[goal[0]][goal[1]], dest[i])
 
     if len(dest) > 0:
         A_star(Grid, cameFrom[goal[0]][goal[1]], dest, priority)
 
-# procedura wpisująca zakodowaną w pliku mapę i przerabia ją na odpowiedni format równocześnie wpisując ją na liste map
 def read_map(file):
     f = open("maps/" + file, "r")
     s = f.read()
@@ -144,10 +138,51 @@ def read_map(file):
         if s[i] == "2":
             map[index].append(Saper())
         if s[i] == "3":
-            map[index].append(Bomb(random.randint(400, 601), "A"))
+            map[index].append(Bomb(200,"A"))
         if s[i] == "\n":
             map.append([])
             index = index + 1
+
+
+def check_type(Grid, x, y):
+    if x < 0 or x > len(Grid)-1 or y < 0 or y > len(Grid[0])-1:
+        return str(4)
+    if Grid[x][y] is None:
+        return str(0)
+    if Grid[x][y].__class__.__name__ == "Wall":
+        return str(1)
+    if Grid[x][y].__class__.__name__ == "Bomb" and Grid[x][y].get_type() == "done":
+        return str(2)
+    else:
+        return str(3)
+
+def get_surround(Grid, x, y):
+    s = ""
+    s = s + " | 1x1:." + check_type(Grid, x - 2, y - 2) + " 1x2:." + check_type(Grid, x - 2, y - 1)
+    s = s + " 1x3:." + check_type(Grid, x - 2, y) + " 1x4:." + check_type(Grid, x - 2, y + 1)
+    s = s + " 1x5:." + check_type(Grid, x - 2, y + 2)
+
+    s = s + " 2x1:." + check_type(Grid, x - 1, y - 2) + " 2x2:." + check_type(Grid, x - 1, y - 1)
+    s = s + " 2x3:." + check_type(Grid, x - 1, y) + " 2x4:." + check_type(Grid, x - 1, y + 1)
+    s = s + " 2x5:." + check_type(Grid, x - 1, y + 2)
+
+    s = s + " 3x1:." + check_type(Grid, x, y - 2) + " 3x2:." + check_type(Grid, x, y - 1)
+    s = s + " 3x4:." + check_type(Grid, x, y + 1) + " 3x5:." + check_type(Grid, x, y + 2)
+
+    s = s + " 4x1:." + check_type(Grid, x + 1, y - 2) + " 4x2:." + check_type(Grid, x + 1, y - 1)
+    s = s + " 4x3:." + check_type(Grid, x + 1, y) + " 4x4:." + check_type(Grid, x + 1, y + 1)
+    s = s + " 4x5:." + check_type(Grid, x + 1, y + 2)
+
+    s = s + " 5x1:." + check_type(Grid, x + 2, y - 2) + " 5x2:." + check_type(Grid, x + 2, y - 1)
+    s = s + " 5x3:." + check_type(Grid, x + 2, y) + " 5x4:." + check_type(Grid, x + 2, y + 1)
+    s = s + " 5x5:." + check_type(Grid, x + 2, y + 2)
+    return s
+
+def write_to_file(file, string):
+    f = open(file, "a")
+    f.write(string)
+    f.write("\n")
+    f.close()
 
 pygame.init()
 
@@ -157,45 +192,20 @@ fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
-read_map("MAPA-TRUDNA.txt")
-# koordynaty Sapera (jeszcze nie przypisane)
+maps = (os.popen("ls maps").read()).split("\n")
+
+
 x = 0
 y = 0
-
-# koordynate ruchu Sapera
 x_r = 0
 y_r = 0
 
-# lista zawierająca współrzędne bomb na mapie
 dest = []
-
-# lista zawierająca priorytety bomb odpowiadające indeksami bombom z powyższej listy
 priority = []
 
-# znalezienie współrzędnych Sapera na danej mapie i przypisanie je do zmiennych x i y
-for i in range(len(map)):
-    for j in range(len(map[i])):
-        if map[i][j].__class__.__name__ == "Saper":
-            x = i
-            y = j
-
-# znalezienie współrzędnych bomb i priorytetów oraz wpisanie je na listy dest i prioryty
-for i in range(len(map)):
-    for j in range(len(map[i])):
-        if map[i][j].__class__.__name__ == "Bomb":
-            dest.append([i,j])
-            priority.append(map[i][j].priority())
-
-# wykonanie algorytmu A* na danej mapie
-A_star(map, [x, y], dest, priority)
-
-# licznik bomb które wybuchły
 detonated = 0
-
-# licznik rozbrojeń
 defused = 0
 
-# Grafika
 Saper_image = pygame.image.load("images/saper.png")
 Saper_A_image = pygame.image.load("images/saper_A.png")
 Saper_B_image = pygame.image.load("images/saper_B.png")
@@ -212,65 +222,91 @@ Wall_image = pygame.image.load("images/Wall.png")
 DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), 0, 32)
 pygame.display.set_caption('Saper')
 
-# obraz w tle
 background_image = pygame.image.load("images/background.png")
-
-# licznik do obsługi ruchów
 loop = 0
-
-# flaga do obsługi zakończenia przechodzenia Sapera po mapie
+counter1 = 0
 flag = True
-
-# główna pętla
 while True:
-    if loop >= len(Solution) and flag:
-        flag = False
-        print("Number of detonated bombs: ", detonated)
-        print("Number of defused bombs: ", defused)
+    if loop >= len(Solution):
+        loop = 0
+        map = []
+        read_map(maps[counter1])
+        dest = []
+        priority = []
+        for i in range(len(map)):
+            for j in range(len(map[i])):
+                if map[i][j].__class__.__name__ == "Saper":
+                    x = i
+                    y = j
+
+        for i in range(len(map)):
+            for j in range(len(map[i])):
+                if map[i][j].__class__.__name__ == "Bomb":
+                    dest.append([i, j])
+                    priority.append(heuristic_cost([x, y], [i, j]))
+
+        print(map)
+        Solution = []
+
+        A_star(map, [x, y], dest, priority)
+
+        if counter1 >= len(maps)-2:
+            os.popen("vw wabbit_examples -f wabbit_model")
+            pygame.quit()
+            sys.exit()
+
+        counter1 = counter1 + 1
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    if flag:
-        if Solution[loop] == "R":
-            if x < len(map) - 1:
-                x_r = x + 1
-                y_r = y
+    s = ""
+    if Solution[loop] == "R":
+        if x < len(map)-1:
+            x_r = x + 1
+            y_r = y
+            s = "1"
 
-        elif Solution[loop] == "L":
-            if x > 0:
-                x_r = x - 1
-                y_r = y
+    elif Solution[loop] == "L":
+        if x > 0:
+            x_r = x - 1
+            y_r = y
+            s = "2"
 
-        elif Solution[loop] == "D":
-            if y < len(map[0]) - 1:
-                y_r = y + 1
-                x_r = x
+    elif Solution[loop] == "D":
+        if y < len(map[0])-1:
+            y_r = y + 1
+            x_r = x
+            s = "3"
 
-        elif Solution[loop] == "U":
-            if y > 0:
-                y_r = y - 1
-                x_r = x
-        loop = loop + 1
+    elif Solution[loop] == "U":
+        if y > 0:
+            y_r = y - 1
+            x_r = x
+            s = "4"
 
-        if x_r != x or y_r != y:
-            if map[x_r][y_r] is None:
-                map[x_r][y_r] = map[x][y]
-                map[x][y] = None
-                x = x_r
-                y = y_r
+    s = s + get_surround(map,x,y)
+    write_to_file("wabbit_examples", s)
+    loop = loop + 1
 
-            elif map[x_r][y_r].__class__.__name__ == "Tools":
-                map[x][y].change_tool(map[x_r][y_r])
-                x_r = x
-                y_r = y
+    if x_r != x or y_r != y:
+        if map[x_r][y_r] is None:
+            map[x_r][y_r] = map[x][y]
+            map[x][y] = None
+            x = x_r
+            y = y_r
 
-            elif map[x_r][y_r].__class__.__name__ == "Bomb":
-                defused = defused + map[x][y].defuse(map[x_r][y_r])
-                x_r = x
-                y_r = y
+        elif map[x_r][y_r].__class__.__name__ == "Tools":
+            map[x][y].change_tool(map[x_r][y_r])
+            x_r = x
+            y_r = y
+
+        elif map[x_r][y_r].__class__.__name__ == "Bomb":
+            defused = defused + map[x][y].defuse(map[x_r][y_r])
+            x_r = x
+            y_r = y
 
     DISPLAYSURF.blit(background_image, (0, 0))
     for i in range(len(map)):

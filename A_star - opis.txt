@@ -1,0 +1,43 @@
+Globalnie tworzona jest lista [Solutions], do ktorej docelowo wpisywana jest ścieżka znaleziona przez algorytm.
+
+Funkcja [A_star] przyjmuje argumenty:
+- [Grid] - lista dwuwymiarowa zawierająca mape
+- [start] - lista dwuelementowa składająca się ze współrzędnych [x,y] z których algorytm zaczyna działanie
+- [dest] - zawiera liste dwuwymiarową zawierającą współrzędne do odwiedzenia przez algorytm
+- [priority] - lista zawierająca priorytety odpowiadające współrzędnym z [dest]
+
+Dokładne działanie funkcji [A_star]:
+1. tworzona jest lista [Open_set] z [start] na pierwszym indeksie oraz pusta lista [Closed_set]
+	- [Open_set] służy do przechowywania punków do sprawdzenia przez algorytm
+	- [Closed_set] służy do przechowywania punków sprawdzonych przez algorytm
+2. algorytm na początku wyznacza cel o najmniejszej liczbie w [priority] i wpisuje jego współrzędne do listy [goal]
+3. usuwa priorytet i odpowiadającą mu współrzędną z [dest] i [priority]
+4. tworzy kopie mapy, w której Bomby które nie są celem algorytmu są obiektem ściany [Wall()], a reszta obiektem [None]
+5. tworzone są macierze [gScore], [fScore] odpowiadające współrzedymi do [Grid] uzupelnione wartością 1000 na każdej wspórzędnej
+	- [gScore] bedzie przedstawiał dla danej współrzędnej jej koszt dojścia do niej z punkut [start]
+	- [fScore] bedzie łączył wartość [gScore] tego punktu z wartością funkcji heurystycznej [heuristic_cost] zwracającą optymistyczny koszt dojscia z danej współrzędnej do współrzędnej do odwiedzenia
+6. tworzona jest macierz [cameFrom] odpowiadające współrzedymi do [Grid] uzupełniona współrzędnymi którym odpowiadają
+	- [cameFrom] przechowa scieżke dojścia z końcowego punku do punku startowego którą trzeba odwrócić w celu otrzymania oczekiwanego wyniku (wykonywane w funkcji [A_star])
+7. w [gScore] na współrzędnej [start] wpisywane jest 0
+8. w [fScore] na współrzędnej [start] wpisywana jest wartość funkcji [heuristic_cost] dla argumentów ([start], [goal])
+9. na potrzeby przerwania pętli tworzona jest zmienna [flag3] z wartoscią logiczną True
+10. dopuki [Open_set] ma jakieś elementy oraz [flag3] jest zwraca wartość logiczną True wykonuj kroki 11. 12. 13. 14. 15.
+11. do listy [current] przypisuje element z listy [Open_set] dla którego wartość w fScore jest najmniejsza
+12. jeżeli [current] zawiera te same współrzędne co [goal] to przypisz [flag3] wartość logiczną Fasle
+13. usuń z listy [Open_set] współrzędną wybraną do [current]
+14. dodanie do listy [Closed_set] współrzędnych z [current]
+15. dla każdej z sąsiednich współrzędnych do [current], które nie odpowiadają obiektowi [Wall()] wykonaj:
+	- sprawdź czy współrzędne sąsiada znajdują się na liście [Closed_set] jeżeli tak zignoruj sąsiada.(nie wykonuj dalszych kroków tego punktu)
+	- wyznacz koszt dojscia do tego punku od startu i przypisz go do tymczasowej [poss_gScore] (possible_gScore)
+	- sprawdź czy współrzędne sąsiada są na liście [Open_set]
+		Jeżeli nie są to je dodaj do listy [Open_set]
+		Jeżeli są to jeżeli [poss_gScore] >= [gScore] sąsiada to nie wykonuj dalszych kroków tego punktu
+	- dla współrzędnych sąsiada na liście [cameFrom] należy przypisać współrzędne [current]
+	- dla współrzędnych sąsiada na liście [gScore] należy przypisać [poss_gScore]
+	- dla współrzędnych sąsiada na liście [fScore] należy przypisać wartość [gScore] sąsiada oraz wartość funkcji [heuristic_cost] dla argumentów (współrzędne sąsiada, [goal])
+16. do listy [Path] wpisać scierzke wyciągniętą z listy [cameFrom] idąc po współrzędnych zaczynając od [goal] kończąc na [start]
+17. Odwróconą ścieżke z [Path] dopisuje się na koniec listy [Solutions] współrzędn po współrzędnej
+18. Jeżeli na liscie [dest] są jeszcze jakieś elementy wykonaj funkcje [A_star] z argumentami ([Grid], [cameFrom](goal) - przedostatni element na ścierzce [Solutions], [dest], [priority])
+
+Algorytmu [heuristic_cost] dla argumentów ([start], [goal]) zwraca długość najkrutszej ścieżki (niekoniecznie istniejącej) pomiędzy dwoma współrzędnymi.
+
