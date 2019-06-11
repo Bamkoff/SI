@@ -224,7 +224,7 @@ while True:
         else:
             counter1 = counter1 + 1
 
-        if counter2 > 100:
+        if counter2 > 100000:
             os.popen("vw wabbit_examples -f wabbit_model")
             time.sleep(5)
             sys.exit()
@@ -240,13 +240,13 @@ while True:
         if x > 0:
             x_r = x - 1
             y_r = y
-            s = "2"
+            s = "3"
 
     elif Solution[loop] == "D":
         if y < len(map[0])-1:
             y_r = y + 1
             x_r = x
-            s = "3"
+            s = "2"
 
     elif Solution[loop] == "U":
         if y > 0:

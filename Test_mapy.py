@@ -18,25 +18,26 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = [[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()],
-	[Wall(), Saper(), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
-	[Wall(), None, Wall(), Wall(), None, Wall(), Bomb(980, "A"), Wall(), None, Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, None, Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, None, None, Wall(), None, None, Wall()],
-	[Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), None, Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), None, Wall(), Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), Wall(), None, Wall()],
-	[Wall(), None, None, None, None, Wall(), None, None, Wall(), None, Wall(), None, None, Wall()],
-	[Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), Wall(), Wall(), Wall()],
-	[Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, Wall(), Bomb(980, "A"), Wall(), Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), None, None, None, Wall(), Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, None, Wall(), None, None, Wall()],
-	[Wall(), None, None, None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), None, Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
-	[Wall(), None, Wall(), None, Wall(), None, Wall(), None, Wall(), Bomb(980, "A"), Wall(), Wall(), None, Wall()],
-	[Wall(), Bomb(980, "A"), Wall(), None, None, None, None, Wall(), None, None, None, None, None, Wall()],
-	[Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+       [Wall(), Saper(), None, None, None, None, None, None, None, None, None, None, Bomb(980, "A"), Wall()],
+       [Wall(), None, Wall(), Wall(), None, Wall(), Bomb(980, "A"), Wall(), None, Wall(), Wall(), Wall(), None, Wall()],
+       [Wall(), None, None, Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, None, Wall()],
+       [Wall(), None, None, Wall(), None, None, None, None, None, None, Wall(), None, None, Wall()],
+       [Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
+       [Wall(), None, None, Wall(), None, None, Wall(), None, Wall(), None, Wall(), None, None, Wall()],
+       [Wall(), None, Wall(), Wall(), None, Wall(), Wall(), None, Wall(), None, Wall(), None, Wall(), Wall()],
+       [Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), None, None, Wall()],
+       [Wall(), Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, Wall(), Wall(), None, Wall()],
+       [Wall(), None, None, None, None, Wall(), None, None, Wall(), None, Wall(), None, None, Wall()],
+       [Wall(), None, None, Wall(), None, None, None, None, Wall(), None, Wall(), Wall(), Wall(), Wall()],
+       [Wall(), None, Wall(), Wall(), Wall(), Wall(), Wall(), None, None, None, Wall(), Bomb(980, "A"), Wall(), Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), None, None, None, Wall(), Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, None, Wall(), None, None, Wall(), None, None, Wall()],
+       [Wall(), None, None, None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), None, Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, None, None, Wall(), Wall(), Wall(), Wall(), None, Wall()],
+       [Wall(), None, Wall(), None, Wall(), None, Wall(), None, Wall(), Bomb(980, "A"), Wall(), Wall(), None, Wall()],
+       [Wall(), Bomb(980, "A"), Wall(), None, None, None, None, Wall(), None, None, None, None, None, Wall()],
+       [Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall(), Wall()]]
+
 x = 0
 y = 0
 x_r = 0

@@ -15,55 +15,39 @@ Solution = []
 # lista zawierająca mapę
 map = []
 
-# funkcja heurystyczna (do obliczania optymistycznej odległości między dwoma punktami)
-def heuristic_cost(start, goal):
-    return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
-
-# procedura rekurencyjna A*
-# dla podanych współrzędnych bomb na danej mapie wyszukuje najkrótszą ścierzkę z kordynatów startowych
-# odwiedzając wszystkie podane bomby zaczynając od tych z najniższym priorytetem (czasem do wybuchu)
-# działanie funkcji A_star opisane w pliku tekstowym "A_star - opis.txt"
-def A_star(Grid, start, dest, priority):
+def bfs_find(Grid, start, dest):
     Closed_set = []
     Open_set = [start]
     cameFrom = []
-    gScore = []
-    fScore = []
     Grid2 = []
-    goal = dest[priority.index(min(priority))]
-    dest.pop(priority.index(min(priority)))
-    priority.pop(priority.index(min(priority)))
 
     for i in range(len(Grid)):
-        gScore.append([])
-        fScore.append([])
         cameFrom.append([])
         Grid2.append([])
         for j in range(len(Grid[i])):
-            gScore[i].append(1000)
-            fScore[i].append(1000)
             cameFrom[i].append([i, j])
-            if Grid[i][j] is None or Grid[i][j].__class__.__name__ == "Saper" or (i == goal[0] and j == goal[1]):
+            flag = False
+            for k in range(len(dest)):
+                if i == dest[k][0] and j == dest[k][1]:
+                    flag = True
+
+            if Grid[i][j] is None or Grid[i][j].__class__.__name__ == "Saper" or flag:
                 Grid2[i].append(None)
             else:
                 Grid2[i].append(Wall())
 
-    gScore[start[0]][start[1]] = 0
-    fScore[start[0]][start[1]] = heuristic_cost(start, goal)
     flag3 = True
+
     while(len(Open_set)>0) and flag3:
         current = Open_set[0]
-        current_id = 0
-        for l in range(len(Open_set)):
-            if fScore[Open_set[l][0]][Open_set[l][1]] < fScore[current[0]][current[1]]:
-                current = Open_set[l]
-                current_id = l
 
-        if current[0] == goal[0] and current[1] == goal[1]:
-            flag3 = False
+        for j in range(len(dest)):
+            if current[0] == dest[j][0] and current[1] == dest[j][1]:
+                flag3 = False
+                goal = j
+                continue
 
-
-        Open_set.pop(current_id)
+        Open_set.pop(0)
         Closed_set.append(current)
 
         for k in range(4):
@@ -82,42 +66,27 @@ def A_star(Grid, start, dest, priority):
                 neighbor = [current[0], current[1] - 1]
 
             if flag2:
-                flag1 = True
-                for l in range(len(Closed_set)):
-                    if Closed_set[l][0] == neighbor[0] and Closed_set[l][1] == neighbor[1]:
-                        flag1 = False
-
-            if flag2 and flag1:
                 for l in range(len(Closed_set)):
                     if Closed_set[l][0] == neighbor[0] and Closed_set[l][1] == neighbor[1]:
                         flag2 = False
                 if flag2:
-                    flag1 = True
-                    poss_gScore = gScore[current[0]][current[1]] + 1
-
-                    for l in range(len(Open_set)):
-                        if Open_set[l][0] == neighbor[0] and Open_set[l][1] == neighbor[1]:
-                            flag1 = False
-                    if flag1:
-                        Open_set.append(neighbor)
-                    elif poss_gScore >= gScore[neighbor[0]][neighbor[1]]:
-                        continue
-
+                    Open_set.append(neighbor)
                     cameFrom[neighbor[0]][neighbor[1]] = [current[0], current[1]]
-                    gScore[neighbor[0]][neighbor[1]] = poss_gScore
-                    fScore[neighbor[0]][neighbor[1]] = gScore[neighbor[0]][neighbor[1]] + heuristic_cost(neighbor, goal)
+
     Path = []
-    temp0 = goal[0]
-    temp1 = goal[1]
+    temp0 = dest[goal][0]
+    temp1 = dest[goal][1]
+    g = dest[goal]
+
     Path.append([temp0, temp1])
     while not(temp0 == start[0] and temp1 == start[1]):
-        Path.append([cameFrom[temp0][temp1][0],cameFrom[temp0][temp1][1]])
+        Path.append([cameFrom[temp0][temp1][0], cameFrom[temp0][temp1][1]])
         help1 = temp0
         help2 = temp1
         temp0 = cameFrom[help1][help2][0]
         temp1 = cameFrom[help1][help2][1]
 
-    for i in range(len(Path)-1,0,-1):
+    for i in range(len(Path)-1, 0, -1):
         if Path[i][0] + 1 == Path[i-1][0] and Path[i][1] == Path[i-1][1]:
             Solution.append("R")
         elif Path[i][0] - 1 == Path[i-1][0] and Path[i][1] == Path[i-1][1]:
@@ -127,8 +96,10 @@ def A_star(Grid, start, dest, priority):
         elif Path[i][0] == Path[i-1][0] and Path[i][1] - 1 == Path[i-1][1]:
             Solution.append("U")
 
+    dest.pop(goal)
+
     if len(dest) > 0:
-        A_star(Grid, cameFrom[goal[0]][goal[1]], dest, priority)
+        bfs_find(Grid, cameFrom[g[0]][g[1]], dest)
 
 # procedura wpisująca zakodowaną w pliku mapę i przerabia ją na odpowiedni format równocześnie wpisując ją na liste map
 def read_map(file):
@@ -157,7 +128,7 @@ fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
-read_map("7.txt")
+read_map("MAPA-TRUDNA.txt")
 # koordynaty Sapera (jeszcze nie przypisane)
 x = 0
 y = 0
@@ -168,9 +139,6 @@ y_r = 0
 
 # lista zawierająca współrzędne bomb na mapie
 dest = []
-
-# lista zawierająca priorytety bomb odpowiadające indeksami bombom z powyższej listy
-priority = []
 
 # znalezienie współrzędnych Sapera na danej mapie i przypisanie je do zmiennych x i y
 for i in range(len(map)):
@@ -184,10 +152,9 @@ for i in range(len(map)):
     for j in range(len(map[i])):
         if map[i][j].__class__.__name__ == "Bomb":
             dest.append([i,j])
-            priority.append(map[i][j].priority())
 
 # wykonanie algorytmu A* na danej mapie
-A_star(map, [x, y], dest, priority)
+bfs_find(map, [x, y], dest)
 
 # licznik bomb które wybuchły
 detonated = 0

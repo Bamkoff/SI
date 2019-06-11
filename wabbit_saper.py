@@ -77,7 +77,7 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
 
 map = []
-read_map("SUPER-SEBA-BY-DUNDAL.txt")
+read_map("8.txt")
 
 x = 0
 y = 0
@@ -131,7 +131,7 @@ while True:
     if prev_output1 == output or prev_output2 == output:
         counter = counter + 1
 
-    if counter > 10:
+    if counter > 21:
         counter = 0
         output = random.randint(0,5)
 
